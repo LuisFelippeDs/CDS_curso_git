@@ -19,6 +19,18 @@ def create_dataframe_SECTION(df):
 
     return None
 
+# Lendo o dataset de fabricantes
+companies = pd.read_csv('../data/raw/companies.csv', index_col=0)
+
+# Método novo
+companies_tuple = create_sorted_companies_tuple(companies)
+
+# Criando a coluna `company` no DataFrame
+df_raw['company'] = df_raw.apply(lambda line: create_company_name(companies_tuple, line), axis=1)
+
+df_raw.head()
+
+
 def main():
     df_raw = load_data()
     st.dataframe(df_raw)
